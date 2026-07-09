@@ -13,12 +13,14 @@ import {
 import { noteSchema } from "../utils/validation";
 import ColorPalette from "./ColorPalette";
 
-function CreateNote({ notes, setNotes }) {
+function CreateNote({ notes, setNotes, labels }) {
     const [expand, setExpand] = useState(false);
 
     const [color, setColor] = useState("#ffffff");
 
     const [pin, setPin] = useState(false);
+
+    const [labelId, setLabelId] = useState("");
 
     const [showPalette, setShowPalette] = useState(false);
 
@@ -68,6 +70,8 @@ function CreateNote({ notes, setNotes }) {
 
                 pin,
 
+                labelId,
+
                 reminder:
                     reminderDate !== ""
                         ? {
@@ -94,6 +98,8 @@ function CreateNote({ notes, setNotes }) {
 
             setPin(false);
 
+            setLabelId("");
+
             setReminderDate("");
 
             setReminderTime("");
@@ -114,6 +120,8 @@ function CreateNote({ notes, setNotes }) {
             setColor("#ffffff");
 
             setPin(false);
+
+            setLabelId("");
 
             setReminderDate("");
 
@@ -262,174 +270,196 @@ function CreateNote({ notes, setNotes }) {
                     )}
 
                     {expand && (
-                        <div className="mt-5 flex items-center justify-between">
-
-                            <div className="flex items-center gap-1">
-
-                                <div className="relative">
-
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowReminder(!showReminder)}
-                                        className="rounded-full p-2 hover:bg-gray-100"
-                                        title="Reminder"
+                        <>
+                            {labels.length > 0 && (
+                                <div className="mb-4">
+                                    <select
+                                        value={labelId}
+                                        onChange={(e) => setLabelId(Number(e.target.value))}
+                                        className="w-full rounded-lg border border-gray-300 p-2 outline-none"
                                     >
-                                        <Bell
-                                            size={18}
-                                            className={
-                                                reminderDate
-                                                    ? "text-yellow-600"
-                                                    : "text-gray-600"
-                                            }
-                                            fill={reminderDate ? "currentColor" : "none"}
-                                        />
-                                    </button>
+                                        <option value="">
+                                            No Label
+                                        </option>
 
-                                    {showReminder && (
-
-                                        <div className="absolute left-0 top-12 z-50 w-72 rounded-xl border border-gray-200 bg-white shadow-xl">
-
-                                            <div className="border-b p-4 font-medium">
-                                                Add Reminder
-                                            </div>
-
-                                            <button
-                                                type="button"
-                                                onClick={setToday}
-                                                className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100"
+                                        {labels.map((label) => (
+                                            <option
+                                                key={label.id}
+                                                value={label.id}
                                             >
-                                                <span>Later Today</span>
+                                                {label.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            )}
 
-                                                <span className="text-sm text-gray-500">
-                                                    6:00 PM
-                                                </span>
-                                            </button>
+                            <div className="mt-5 flex items-center justify-between">
+                                <div className="flex items-center gap-1">
+                                    <div className="relative">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowReminder(!showReminder)}
+                                            className="rounded-full p-2 hover:bg-gray-100"
+                                            title="Reminder"
+                                        >
+                                            <Bell
+                                                size={18}
+                                                className={
+                                                    reminderDate
+                                                        ? "text-yellow-600"
+                                                        : "text-gray-600"
+                                                }
+                                                fill={reminderDate ? "currentColor" : "none"}
+                                            />
+                                        </button>
 
-                                            <button
-                                                type="button"
-                                                onClick={setTomorrow}
-                                                className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100"
-                                            >
-                                                <span>Tomorrow</span>
+                                        {showReminder && (
 
-                                                <span className="text-sm text-gray-500">
-                                                    8:00 AM
-                                                </span>
-                                            </button>
+                                            <div className="absolute left-0 top-12 z-50 w-72 rounded-xl border border-gray-200 bg-white shadow-xl">
 
-                                            <button
-                                                type="button"
-                                                onClick={setNextWeek}
-                                                className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100"
-                                            >
-                                                <span>Next Week</span>
-
-                                                <span className="text-sm text-gray-500">
-                                                    Monday
-                                                </span>
-                                            </button>
-
-                                            <div className="border-t p-4">
-
-                                                <div className="flex items-center gap-2">
-
-                                                    <Calendar size={18} />
-
-                                                    <input
-                                                        type="date"
-                                                        value={reminderDate}
-                                                        onChange={(e) => {
-                                                            setReminderDate(e.target.value);
-                                                            setReminderLabel("Custom");
-                                                        }}
-                                                        className="w-full rounded border p-2"
-                                                    />
-
-                                                </div>
-
-                                                <div className="mt-3 flex items-center gap-2">
-
-                                                    <Clock size={18} />
-
-                                                    <input
-                                                        type="time"
-                                                        value={reminderTime}
-                                                        onChange={(e) => setReminderTime(e.target.value)}
-                                                        className="w-full rounded border p-2"
-                                                    />
-
+                                                <div className="border-b p-4 font-medium">
+                                                    Add Reminder
                                                 </div>
 
                                                 <button
                                                     type="button"
-                                                    onClick={() => setShowReminder(false)}
-                                                    className="mt-4 w-full rounded-lg bg-blue-500 py-2 text-white hover:bg-blue-600"
+                                                    onClick={setToday}
+                                                    className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100"
                                                 >
-                                                    Save Reminder
+                                                    <span>Later Today</span>
+
+                                                    <span className="text-sm text-gray-500">
+                                                        6:00 PM
+                                                    </span>
                                                 </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={setTomorrow}
+                                                    className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100"
+                                                >
+                                                    <span>Tomorrow</span>
+
+                                                    <span className="text-sm text-gray-500">
+                                                        8:00 AM
+                                                    </span>
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={setNextWeek}
+                                                    className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100"
+                                                >
+                                                    <span>Next Week</span>
+
+                                                    <span className="text-sm text-gray-500">
+                                                        Monday
+                                                    </span>
+                                                </button>
+
+                                                <div className="border-t p-4">
+
+                                                    <div className="flex items-center gap-2">
+
+                                                        <Calendar size={18} />
+
+                                                        <input
+                                                            type="date"
+                                                            value={reminderDate}
+                                                            onChange={(e) => {
+                                                                setReminderDate(e.target.value);
+                                                                setReminderLabel("Custom");
+                                                            }}
+                                                            className="w-full rounded border p-2"
+                                                        />
+
+                                                    </div>
+
+                                                    <div className="mt-3 flex items-center gap-2">
+
+                                                        <Clock size={18} />
+
+                                                        <input
+                                                            type="time"
+                                                            value={reminderTime}
+                                                            onChange={(e) => setReminderTime(e.target.value)}
+                                                            className="w-full rounded border p-2"
+                                                        />
+
+                                                    </div>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowReminder(false)}
+                                                        className="mt-4 w-full rounded-lg bg-blue-500 py-2 text-white hover:bg-blue-600"
+                                                    >
+                                                        Save Reminder
+                                                    </button>
+
+                                                </div>
 
                                             </div>
 
-                                        </div>
+                                        )}
 
-                                    )}
+                                    </div>
 
-                                </div>
+                                    <div className="relative">
 
-                                <div className="relative">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPalette(!showPalette)}
+                                            className="rounded-full p-2 hover:bg-gray-100"
+                                            title="Background options"
+                                        >
+                                            <Palette
+                                                size={18}
+                                                className="text-gray-600"
+                                            />
+                                        </button>
 
+                                        {showPalette && (
+
+                                            <div className="absolute top-full left-0 mt-2 z-50 w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-xl">                                            <ColorPalette
+                                                color={color}
+                                                setColor={setColor}
+                                                closePalette={() => setShowPalette(false)}
+                                            />
+
+                                            </div>
+
+                                        )}
+
+                                    </div>
                                     <button
                                         type="button"
-                                        onClick={() => setShowPalette(!showPalette)}
                                         className="rounded-full p-2 hover:bg-gray-100"
-                                        title="Background options"
+                                        title="More"
                                     >
-                                        <Palette
+                                        <MoreVertical
                                             size={18}
                                             className="text-gray-600"
                                         />
                                     </button>
 
-                                    {showPalette && (
-
-                                        <div className="absolute top-full left-0 mt-2 z-50 w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-xl">                                            <ColorPalette
-                                            color={color}
-                                            setColor={setColor}
-                                            closePalette={() => setShowPalette(false)}
-                                        />
-
-                                        </div>
-
-                                    )}
-
                                 </div>
+
                                 <button
                                     type="button"
-                                    className="rounded-full p-2 hover:bg-gray-100"
-                                    title="More"
+                                    onClick={handleClose}
+                                    className="rounded-md px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
                                 >
-                                    <MoreVertical
-                                        size={18}
-                                        className="text-gray-600"
-                                    />
+                                    Close
                                 </button>
 
                             </div>
-
-                            <button
-                                type="button"
-                                onClick={handleClose}
-                                className="rounded-md px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
-                            >
-                                Close
-                            </button>
-
-                        </div>
+                        </>
                     )}
 
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 }
 

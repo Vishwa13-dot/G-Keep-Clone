@@ -43,9 +43,8 @@ function Sidebar({ open, labels }) {
 
   return (
     <aside
-      className={`fixed top-16 left-0 bottom-0 bg-white border-r border-gray-200 shadow-sm transition-all duration-300 overflow-y-auto ${
-        open ? "w-72" : "w-20"
-      }`}
+      className={`fixed top-16 left-0 bottom-0 bg-white border-r border-gray-200 shadow-sm overflow-y-auto transition-all duration-300 ${open ? "w-72" : "w-20"
+        }`}
     >
       <div className="mt-3">
 
@@ -56,10 +55,9 @@ function Sidebar({ open, labels }) {
             key={index}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition-all duration-200 ${
-                isActive
-                  ? "bg-[#feefc3] text-gray-900 font-medium"
-                  : "text-gray-700 hover:bg-[#f1f3f4]"
+              `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${isActive
+                ? "bg-[#feefc3] text-gray-900 font-medium"
+                : "text-gray-700 hover:bg-[#f1f3f4]"
               }`
             }
           >
@@ -73,7 +71,7 @@ function Sidebar({ open, labels }) {
           </NavLink>
         ))}
 
-        {/* Dynamic Labels */}
+        {/* Labels */}
 
         {labels.length > 0 && (
           <>
@@ -84,10 +82,9 @@ function Sidebar({ open, labels }) {
                 key={label.id}
                 to={`/label/${label.id}`}
                 className={({ isActive }) =>
-                  `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition-all duration-200 ${
-                    isActive
-                      ? "bg-[#feefc3] text-gray-900 font-medium"
-                      : "text-gray-700 hover:bg-[#f1f3f4]"
+                  `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${isActive
+                    ? "bg-[#feefc3] text-gray-900 font-medium"
+                    : "text-gray-700 hover:bg-[#f1f3f4]"
                   }`
                 }
               >
@@ -112,10 +109,9 @@ function Sidebar({ open, labels }) {
             key={index}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition-all duration-200 ${
-                isActive
-                  ? "bg-[#feefc3] text-gray-900 font-medium"
-                  : "text-gray-700 hover:bg-[#f1f3f4]"
+              `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${isActive
+                ? "bg-[#feefc3] text-gray-900 font-medium"
+                : "text-gray-700 hover:bg-[#f1f3f4]"
               }`
             }
           >

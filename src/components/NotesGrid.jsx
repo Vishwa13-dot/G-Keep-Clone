@@ -4,14 +4,17 @@ import EmptyState from "./EmptyState";
 import NoteCard from "./NoteCard";
 import EditModal from "./EditModal";
 
-function NotesGrid({ notes, setNotes }) {
+function NotesGrid({
+  notes,
+  setNotes,
+  labels,
+}) {
   const [selected, setSelected] = useState(null);
 
   const save = (updated) => {
     setNotes(updated);
   };
 
-  // Move to Trash
   const handleDelete = (id) => {
     const updated = notes.map((item) =>
       item.id === id
@@ -26,7 +29,6 @@ function NotesGrid({ notes, setNotes }) {
     save(updated);
   };
 
-  // Archive / Unarchive
   const handleArchive = (id) => {
     const updated = notes.map((item) =>
       item.id === id
@@ -71,20 +73,30 @@ function NotesGrid({ notes, setNotes }) {
   };
 
   const pinned = notes.filter(
-    (item) => item.pin && !item.archive && !item.trash
+    (item) =>
+      item.pin &&
+      !item.archive &&
+      !item.trash
   );
 
   const others = notes.filter(
-    (item) => !item.pin && !item.archive && !item.trash
+    (item) =>
+      !item.pin &&
+      !item.archive &&
+      !item.trash
   );
 
-  if (pinned.length === 0 && others.length === 0) {
+  if (
+    pinned.length === 0 &&
+    others.length === 0
+  ) {
     return <EmptyState />;
   }
 
   return (
     <>
       <div className="px-6 mt-10">
+
         {pinned.length > 0 && (
           <>
             <h3 className="mb-4 text-xs uppercase text-gray-500">
@@ -96,6 +108,7 @@ function NotesGrid({ notes, setNotes }) {
                 <NoteCard
                   key={note.id}
                   note={note}
+                  labels={labels}
                   handleEdit={setSelected}
                   handleDelete={handleDelete}
                   handleArchive={handleArchive}
@@ -117,6 +130,7 @@ function NotesGrid({ notes, setNotes }) {
                 <NoteCard
                   key={note.id}
                   note={note}
+                  labels={labels}
                   handleEdit={setSelected}
                   handleDelete={handleDelete}
                   handleArchive={handleArchive}
@@ -126,12 +140,14 @@ function NotesGrid({ notes, setNotes }) {
             </div>
           </>
         )}
+
       </div>
 
       {selected && (
         <EditModal
           note={selected}
           notes={notes}
+          labels={labels}
           setNotes={setNotes}
           setSelected={setSelected}
         />
