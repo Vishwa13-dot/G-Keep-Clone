@@ -5,26 +5,25 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
 function MainLayout() {
-  // Desktop sidebar
   const [open, setOpen] = useState(true);
-
-  // Mobile sidebar
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Notes
   const [notes, setNotes] = useState([]);
-
-  // Labels
   const [labels, setLabels] = useState([]);
 
+  // Search
+  const [search, setSearch] = useState("");
+
   return (
-    <div className="min-h-screen bg-[#f8f9fa]">
+    <div className="min-h-screen bg-[#f8f9fa] text-gray-800">
 
       <Header
         open={open}
         setOpen={setOpen}
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
+        search={search}
+        setSearch={setSearch}
       />
 
       <Sidebar
@@ -45,9 +44,11 @@ function MainLayout() {
             setNotes,
             labels,
             setLabels,
+            search,
           }}
         />
       </main>
+
     </div>
   );
 }

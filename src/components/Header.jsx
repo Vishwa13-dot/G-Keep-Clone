@@ -11,6 +11,8 @@ function Header({
   setOpen,
   mobileOpen,
   setMobileOpen,
+  search,
+  setSearch,
 }) {
   const handleMenu = () => {
     if (window.innerWidth < 768) {
@@ -28,9 +30,9 @@ function Header({
 
         <button
           onClick={handleMenu}
-          className="rounded-full p-2 hover:bg-gray-100 transition"
+          className="rounded-full p-2 hover:bg-gray-100"
         >
-          <Menu size={22} className="text-gray-700" />
+          <Menu size={22} />
         </button>
 
         <img
@@ -54,6 +56,8 @@ function Header({
         <input
           type="text"
           placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           className="w-full bg-transparent outline-none text-gray-700"
         />
 
@@ -64,19 +68,19 @@ function Header({
       <div className="flex items-center gap-1 md:gap-2">
 
         <button className="hidden md:flex rounded-full p-2 hover:bg-gray-100">
-          <RefreshCw size={20} className="text-gray-600" />
+          <RefreshCw size={20} />
         </button>
 
         <button className="hidden md:flex rounded-full p-2 hover:bg-gray-100">
-          <Grid2X2 size={20} className="text-gray-600" />
+          <Grid2X2 size={20} />
         </button>
 
         <button className="hidden md:flex rounded-full p-2 hover:bg-gray-100">
-          <Settings size={20} className="text-gray-600" />
+          <Settings size={20} />
         </button>
 
         <button className="md:hidden rounded-full p-2 hover:bg-gray-100">
-          <Search size={20} className="text-gray-600" />
+          <Search size={20} />
         </button>
 
         <img

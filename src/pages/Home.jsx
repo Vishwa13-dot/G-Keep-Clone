@@ -8,7 +8,15 @@ function Home() {
     notes,
     setNotes,
     labels,
+    search,
   } = useOutletContext();
+
+  const filteredNotes = notes.filter((note) => {
+    const text =
+      `${note.title} ${note.note}`.toLowerCase();
+
+    return text.includes(search.toLowerCase());
+  });
 
   return (
     <>
@@ -19,10 +27,9 @@ function Home() {
       />
 
       <NotesGrid
-        notes={notes}
+        notes={filteredNotes}
         setNotes={setNotes}
         labels={labels}
-
       />
     </>
   );

@@ -432,16 +432,7 @@ function CreateNote({ notes, setNotes, labels }) {
                                         )}
 
                                     </div>
-                                    <button
-                                        type="button"
-                                        className="rounded-full p-2 hover:bg-gray-100"
-                                        title="More"
-                                    >
-                                        <MoreVertical
-                                            size={18}
-                                            className="text-gray-600"
-                                        />
-                                    </button>
+                                 
 
                                 </div>
 
