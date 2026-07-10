@@ -5,29 +5,38 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
 function MainLayout() {
+  // Desktop sidebar
   const [open, setOpen] = useState(true);
 
-  // Notes exist only while the app is running
+  // Mobile sidebar
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Notes
   const [notes, setNotes] = useState([]);
 
-  // Labels exist only while the app is running
+  // Labels
   const [labels, setLabels] = useState([]);
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen text-gray-800">
+    <div className="min-h-screen bg-[#f8f9fa]">
+
       <Header
         open={open}
         setOpen={setOpen}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
       />
 
       <Sidebar
         open={open}
         labels={labels}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
       />
 
       <main
-        className={`pt-20 transition-all duration-300 ${
-          open ? "ml-72" : "ml-20"
+        className={`pt-20 px-4 transition-all duration-300 ${
+          open ? "md:ml-72" : "md:ml-20"
         }`}
       >
         <Outlet

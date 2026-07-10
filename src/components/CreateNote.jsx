@@ -185,7 +185,7 @@ function CreateNote({ notes, setNotes, labels }) {
         <div className="flex justify-center mt-10 px-4">
             <form
                 style={{ backgroundColor: color }}
-                className="w-full max-w-xl rounded-xl border border-gray-300 shadow-md"
+                className="w-full max-w-md sm:max-w-xl mx-auto rounded-xl border border-gray-300 shadow-md"
             >
                 <div className="p-4">
 
@@ -294,8 +294,8 @@ function CreateNote({ notes, setNotes, labels }) {
                                 </div>
                             )}
 
-                            <div className="mt-5 flex items-center justify-between">
-                                <div className="flex items-center gap-1">
+                            <div className="mt-5 flex flex-wrap items-center justify-between gap-2">
+                                <div className="flex flex-wrap items-center gap-1">
                                     <div className="relative">
                                         <button
                                             type="button"
@@ -316,7 +316,7 @@ function CreateNote({ notes, setNotes, labels }) {
 
                                         {showReminder && (
 
-                                            <div className="absolute left-0 top-12 z-50 w-72 rounded-xl border border-gray-200 bg-white shadow-xl">
+                                            <div className="absolute left-0 top-12 z-50 w-64 sm:w-72 rounded-xl border border-gray-200 bg-white shadow-xl">
 
                                                 <div className="border-b p-4 font-medium">
                                                     Add Reminder
@@ -421,7 +421,7 @@ function CreateNote({ notes, setNotes, labels }) {
 
                                         {showPalette && (
 
-                                            <div className="absolute top-full left-0 mt-2 z-50 w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-xl">                                            <ColorPalette
+                                            <div className="absolute top-full left-0 mt-2 z-50 w-64 sm:w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-xl">                                            <ColorPalette
                                                 color={color}
                                                 setColor={setColor}
                                                 closePalette={() => setShowPalette(false)}
@@ -448,7 +448,7 @@ function CreateNote({ notes, setNotes, labels }) {
                                 <button
                                     type="button"
                                     onClick={handleClose}
-                                    className="rounded-md px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                                    className="rounded-md px-4 sm:px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
                                 >
                                     Close
                                 </button>

@@ -4,7 +4,7 @@ import { Bell } from "lucide-react";
 import NoteCard from "../components/NoteCard";
 
 function Reminders() {
-  const { notes, setNotes } = useOutletContext();
+  const { notes, setNotes, labels } = useOutletContext();
 
   const reminderNotes = notes.filter(
     (item) => item.reminder && !item.trash
@@ -95,6 +95,7 @@ function Reminders() {
           <NoteCard
             key={note.id}
             note={note}
+            labels={labels}
             handleEdit={() => {}}
             handleDelete={handleDelete}
             handleArchive={handleArchive}

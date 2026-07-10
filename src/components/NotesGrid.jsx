@@ -95,7 +95,7 @@ function NotesGrid({
 
   return (
     <>
-      <div className="px-6 mt-10">
+      <div className="px-3 sm:px-6 mt-8">
 
         {pinned.length > 0 && (
           <>

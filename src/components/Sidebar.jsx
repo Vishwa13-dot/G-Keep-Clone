@@ -9,7 +9,12 @@ import {
 
 import { NavLink } from "react-router-dom";
 
-function Sidebar({ open, labels }) {
+function Sidebar({
+  open,
+  labels,
+  mobileOpen,
+  setMobileOpen,
+}) {
   const menu = [
     {
       title: "Notes",
@@ -41,91 +46,140 @@ function Sidebar({ open, labels }) {
     },
   ];
 
+  const closeMobile = () => {
+    if (window.innerWidth < 768) {
+      setMobileOpen(false);
+    }
+  };
+
   return (
-    <aside
-      className={`fixed top-16 left-0 bottom-0 bg-white border-r border-gray-200 shadow-sm overflow-y-auto transition-all duration-300 ${open ? "w-72" : "w-20"
-        }`}
-    >
-      <div className="mt-3">
+    <>
+      {/* Mobile Overlay */}
 
-        {/* Default Menu */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 top-16 bg-black/30 z-40 md:hidden"
+          onClick={closeMobile}
+        />
+      )}
 
-        {menu.map((item, index) => (
-          <NavLink
-            key={index}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${isActive
-                ? "bg-[#feefc3] text-gray-900 font-medium"
-                : "text-gray-700 hover:bg-[#f1f3f4]"
-              }`
-            }
-          >
-            {item.icon}
+      {/* Sidebar */}
 
-            {open && (
-              <span className="text-sm">
-                {item.title}
-              </span>
-            )}
-          </NavLink>
-        ))}
+      <aside
+        className={`
+          fixed
+          top-16
+          left-0
+          bottom-0
+          z-50
+          bg-white
+          border-r
+          border-gray-200
+          shadow-sm
+          overflow-y-auto
 
-        {/* Labels */}
+          transition-all
+          duration-300
 
-        {labels.length > 0 && (
-          <>
-            <div className="my-3 border-t border-gray-200"></div>
+          w-72
 
-            {labels.map((label) => (
-              <NavLink
-                key={label.id}
-                to={`/label/${label.id}`}
-                className={({ isActive }) =>
-                  `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${isActive
+          ${
+            mobileOpen
+              ? "translate-x-0"
+              : "-translate-x-full"
+          }
+
+          md:translate-x-0
+          ${open ? "md:w-72" : "md:w-20"}
+        `}
+      >
+        <div className="mt-3">
+
+          {/* Default Menu */}
+
+          {menu.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              onClick={closeMobile}
+              className={({ isActive }) =>
+                `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${
+                  isActive
                     ? "bg-[#feefc3] text-gray-900 font-medium"
                     : "text-gray-700 hover:bg-[#f1f3f4]"
-                  }`
-                }
-              >
-                <Tag size={20} />
+                }`
+              }
+            >
+              {item.icon}
 
-                {open && (
-                  <span className="text-sm">
-                    {label.name}
-                  </span>
-                )}
-              </NavLink>
-            ))}
+              {(open || mobileOpen) && (
+                <span className="text-sm">
+                  {item.title}
+                </span>
+              )}
+            </NavLink>
+          ))}
 
-            <div className="my-3 border-t border-gray-200"></div>
-          </>
-        )}
+          {/* Labels */}
 
-        {/* Bottom Menu */}
+          {labels.length > 0 && (
+            <>
+              <div className="my-3 border-t border-gray-200"></div>
 
-        {bottomMenu.map((item, index) => (
-          <NavLink
-            key={index}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${isActive
-                ? "bg-[#feefc3] text-gray-900 font-medium"
-                : "text-gray-700 hover:bg-[#f1f3f4]"
-              }`
-            }
-          >
-            {item.icon}
+              {labels.map((label) => (
+                <NavLink
+                  key={label.id}
+                  to={`/label/${label.id}`}
+                  onClick={closeMobile}
+                  className={({ isActive }) =>
+                    `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${
+                      isActive
+                        ? "bg-[#feefc3] text-gray-900 font-medium"
+                        : "text-gray-700 hover:bg-[#f1f3f4]"
+                    }`
+                  }
+                >
+                  <Tag size={20} />
 
-            {open && (
-              <span className="text-sm">
-                {item.title}
-              </span>
-            )}
-          </NavLink>
-        ))}
-      </div>
-    </aside>
+                  {(open || mobileOpen) && (
+                    <span className="text-sm">
+                      {label.name}
+                    </span>
+                  )}
+                </NavLink>
+              ))}
+
+              <div className="my-3 border-t border-gray-200"></div>
+            </>
+          )}
+
+          {/* Bottom Menu */}
+
+          {bottomMenu.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              onClick={closeMobile}
+              className={({ isActive }) =>
+                `flex items-center gap-5 mx-3 my-1 px-5 py-4 rounded-r-full transition ${
+                  isActive
+                    ? "bg-[#feefc3] text-gray-900 font-medium"
+                    : "text-gray-700 hover:bg-[#f1f3f4]"
+                }`
+              }
+            >
+              {item.icon}
+
+              {(open || mobileOpen) && (
+                <span className="text-sm">
+                  {item.title}
+                </span>
+              )}
+            </NavLink>
+          ))}
+        </div>
+      </aside>
+    </>
   );
 }
 
